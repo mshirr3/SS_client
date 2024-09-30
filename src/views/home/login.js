@@ -11,8 +11,9 @@ export default function Login () {
   const [password, setPassword] = useState('')
 
   /**
+   * Function to log in.
    *
-   * @param ev
+   * @param {Event} ev the event.
    */
   async function login (ev) {
     ev.preventDefault()

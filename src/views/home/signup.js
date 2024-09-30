@@ -5,7 +5,7 @@ import { React, useState } from 'react'
  * @returns {HTMLBaseElement} html
  */
 export default function Signup () {
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   /**
    * Function that is called when user submits their info (onSubmit).
@@ -14,24 +14,32 @@ export default function Signup () {
    */
   async function register (ev) {
     ev.preventDefault()
-    await fetch(process.env.REACT_APP_API_URL, {
+    console.log(username)
+    const apiUrl = `${process.env.REACT_APP_API_URL}/register`
+    const res = await fetch(apiUrl, {
       method: 'POST',
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, password }),
       headers: { 'Content-type': 'application/json' }
     })
+    if (res.ok) {
+      alert('Registration successful')
+    } else {
+      alert('Registration failed')
+    }
   }
   return (
         <div className="offset-md-3 col-md-4">
             <form id="reg-form"
             // call register func when submitted
              onSubmit={register}>
+              <h1>Sign up</h1>
                 <div className="form-group">
-                    <label htmlFor="">email</label>
-                    <input type="text" name="email"
-                    className="form-control" placeholder="email"
-                    value={email}
+                    <label htmlFor="">username</label>
+                    <input type="text" name="username"
+                    className="form-control" placeholder="username"
+                    value={username}
                      // set the email value on change.
-                     onChange={ev => setEmail(ev.target.value)}/>
+                     onChange={ev => setUsername(ev.target.value)}/>
                 </div>
 
                 <div className="form-group">

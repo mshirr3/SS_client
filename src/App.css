@@ -32,9 +32,13 @@
   margin-top: 25px;
 }
 
-button {
+form button {
   padding-top: 5px;
   padding-top: 10px;
+}
+
+form h1 {
+  text-align: center;
 }
 
 @keyframes App-logo-spin {

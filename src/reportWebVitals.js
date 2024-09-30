@@ -1,7 +1,7 @@
 /**
  * Function.
  *
- * @param onPerfEntry parameter
+ * @param {onPerfEntry} onPerfEntry parameter
  */
 const reportWebVitals = onPerfEntry => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
