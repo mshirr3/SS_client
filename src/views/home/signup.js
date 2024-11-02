@@ -14,7 +14,6 @@ export default function Signup () {
    */
   async function register (ev) {
     ev.preventDefault()
-    console.log(username)
     const apiUrl = `${process.env.REACT_APP_API_URL}/register`
     const res = await fetch(apiUrl, {
       method: 'POST',

@@ -1,4 +1,5 @@
 import { React, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 /**
  * Function that returns html text for login page.
@@ -7,8 +8,10 @@ import { React, useState } from 'react'
  */
 export default function Login () {
   // use state to manage the form data.
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [redirect, setRedirect] = useState(false)
+  const navigate = useNavigate()
 
   /**
    * Function to log in.
@@ -17,25 +20,38 @@ export default function Login () {
    */
   async function login (ev) {
     ev.preventDefault()
-    await fetch(process.env.API_URL, {
+    const apiUrl = `${process.env.REACT_APP_API_URL}/login`
+    const res = await fetch(apiUrl, {
       method: 'POST',
-      body: JSON.stringify()
+      body: JSON.stringify({ username, password }),
+      headers: { 'Content-type': 'application/json' },
+      credentials: 'include' // if cookie present it would be included in browser requests
     })
+
+    if (res.ok) {
+      setRedirect(true)
+    } else {
+      alert('Wrong username or password')
+    }
+
+    if (redirect) {
+      navigate('/forumsIndex')
+    }
   }
 
   return (
         <div className="offset-md-3 col-md-4">
             <form id="reg-form" onSubmit={login}>
                 <div className="form-group">
-                    <label htmlFor="">Email</label>
+                    <label htmlFor="">username</label>
                     <input type="text" className="form-control"
-                     placeholder="email" value={email}
+                     placeholder="username" value={username}
                      // set the email value on change.
-                     onChange={ev => setEmail(ev.target.value)}/>
+                     onChange={ev => setUsername(ev.target.value)}/>
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="">Password</label>
+                    <label htmlFor="">password</label>
                     <input type="text" name="password"
                     className="form-control" placeholder="password"
                     value={password}
