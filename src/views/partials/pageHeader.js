@@ -9,7 +9,6 @@ import { UserContext } from '../../UserContext.js'
  */
 export default function Header () {
   const { setUserInfo, userInfo } = useContext(UserContext)
-
   useEffect(() => {
     if (window.localStorage.getItem('isLoggedIn') === 'true') {
       fetch('http://localhost:3200/api/v1/userInfo', {

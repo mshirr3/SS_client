@@ -37,7 +37,7 @@ export default function Login () {
         setRedirect(true)
       })
     } else {
-      alert('Wrong username or password')
+      alert('Wrong credentials')
     }
 
     if (redirect) {
