@@ -1,35 +1,61 @@
 import { Link } from 'react-router-dom'
-import React from 'react'
+import { React, useContext, useEffect } from 'react'
+import { UserContext } from '../../UserContext.js'
 
 /**
- * Function that returns the header container.
+ * Header func.
  *
- * @returns {HTMLElement} container div
+ * @returns {HTMLHeadElement} .
  */
-export default function HeaderContainer () {
-  return (
-        <div className="container">
-            <header className="border-bottom lh-1 py-3">
-                <div className="row flex-nowrap justify-content-between align-items-center">
-                    <div className="col-1 pt-1">
-                        <Link to="/signup" class="link-secondary">Sign up</Link>
-                    </div>
-                    <div className="col-1 pt-1">
-                        <Link to="/forumsIndex">Rooms</Link>
-                    </div>
-                    <div className="col-4 text-center">
-                        <h2>
-                            <Link class="blog-header-logo text-body-emphasis text-decoration-none" to=".">
-                                StayStrong
-                            </Link>
-                        </h2>
-                    </div>
+export default function Header () {
+  const { setUserInfo, userInfo } = useContext(UserContext)
 
-                    <div className="col-4 d-flex justify-content-end align-items-center">
-                        <Link to="/login" class="btn btn-sm btn-outline-secondary">Log in</Link>
-                    </div>
-                </div>
-            </header>
-        </div>
+  useEffect(() => {
+    if (window.localStorage.getItem('isLoggedIn') === 'true') {
+      fetch('http://localhost:3200/api/v1/userInfo', {
+        credentials: 'include'
+      }).then(response => {
+        response.json().then(userInfo => {
+          setUserInfo(userInfo)
+        })
+      }).catch(error => {
+        console.error('Error fetching data: ', error)
+        setUserInfo(null)
+      })
+    }
+  }, [])
+
+  /**
+   * Logout func.
+   *
+   */
+  function logout () {
+    fetch('http://localhost:3200/api/v1/logout', {
+      credentials: 'include',
+      method: 'POST'
+    })
+    window.localStorage.setItem('isLoggedIn', false)
+    setUserInfo(null)
+  }
+
+  const username = userInfo?.username
+  return (
+    <header>
+      <Link to="/" className="logo">StayStrong</Link>
+      <nav>
+        {username && (
+          <>
+            <Link to="/create">Create new room</Link>
+            <a onClick={logout}>Logout ({username})</a>
+          </>
+        )}
+        {!username && (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Sign up</Link>
+          </>
+        )}
+      </nav>
+    </header>
   )
 }

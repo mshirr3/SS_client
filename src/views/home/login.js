@@ -1,5 +1,6 @@
-import { React, useState } from 'react'
+import { React, useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../../UserContext.js'
 
 /**
  * Function that returns html text for login page.
@@ -11,6 +12,7 @@ export default function Login () {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [redirect, setRedirect] = useState(false)
+  const { setUserInfo } = useContext(UserContext)
   const navigate = useNavigate()
 
   /**
@@ -29,7 +31,11 @@ export default function Login () {
     })
 
     if (res.ok) {
-      setRedirect(true)
+      res.json().then(userInfo => {
+        setUserInfo(userInfo)
+        window.localStorage.setItem('isLoggedIn', true)
+        setRedirect(true)
+      })
     } else {
       alert('Wrong username or password')
     }
@@ -41,6 +47,7 @@ export default function Login () {
 
   return (
         <div className="offset-md-3 col-md-4">
+            <h1>Login</h1>
             <form id="reg-form" onSubmit={login}>
                 <div className="form-group">
                     <label htmlFor="">username</label>

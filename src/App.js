@@ -7,6 +7,7 @@ import HomePageMain from './views/home/index.js'
 import Signup from './views/home/signup.js'
 import Login from './views/home/login.js'
 import ForumsIndex from './views/forumPages/forumsIndex.js'
+import { UserContextProvider } from './UserContext.js'
 
 /**
  * Main app function.
@@ -15,7 +16,8 @@ import ForumsIndex from './views/forumPages/forumsIndex.js'
  */
 function App () {
   return (
-    <Routes>
+    <UserContextProvider>
+      <Routes>
       <Route path="/" element={<Layout />}>
       <Route index element={
         <HomePageMain />
@@ -31,7 +33,7 @@ function App () {
       } />
       </Route>
     </Routes>
-
+    </UserContextProvider>
   )
 }
 

@@ -1,4 +1,4 @@
-import HeaderContainer from '../partials/pageHeader'
+import Header from '../partials/pageHeader.js'
 import { Outlet } from 'react-router-dom'
 import React from 'react'
 
@@ -10,7 +10,7 @@ import React from 'react'
 export default function Layout () {
   return (
         <div className="main">
-          <HeaderContainer />
+          <Header />
           <Outlet />
         </div>
   )
