@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { React, useContext, useEffect } from 'react'
 import { UserContext } from '../../UserContext.js'
 
@@ -9,6 +9,8 @@ import { UserContext } from '../../UserContext.js'
  */
 export default function Header () {
   const { setUserInfo, userInfo } = useContext(UserContext)
+  const navigate = useNavigate()
+
   useEffect(() => {
     if (window.localStorage.getItem('isLoggedIn') === 'true') {
       fetch('https://cscloud8-35.lnu.se/auth-service/api/v1/userInfo', {
@@ -22,7 +24,7 @@ export default function Header () {
         setUserInfo(null)
       })
     }
-  }, [setUserInfo])
+  }, [userInfo, setUserInfo])
 
   /**
    * Logout func.
@@ -35,6 +37,7 @@ export default function Header () {
     })
     window.localStorage.setItem('isLoggedIn', false)
     setUserInfo(null)
+    navigate('/roomsIndex')
   }
 
   const username = userInfo?.username

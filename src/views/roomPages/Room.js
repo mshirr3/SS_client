@@ -26,7 +26,6 @@ export default function Room () {
       const roomData = await response.json()
       setRoomData(roomData)
       setThoughts(roomData.room.comments || [])
-      console.log(roomData.room.comments)
     } catch (error) {
       console.error('Error fetching room data:', error)
     }
@@ -86,7 +85,8 @@ export default function Room () {
     <p style={{ color: '#999', marginLeft: '20px' }}>No thoughts yet. Be the first to share one!</p>
               )}
 
-          <form onSubmit={submitThought}
+          { userInfo.username
+            ? (<form onSubmit={submitThought}
            style={{ marginTop: '20px', display: 'flex', flexDirection: 'column' }}
           >
             <label htmlFor="new-thought" style={{ marginLeft: '10px' }}>Add a thought:</label>
@@ -117,7 +117,11 @@ export default function Room () {
               marginLeft: '20px'
             }}
             >Submit</button>
-          </form>
+          </form>)
+            : (
+            <p style={{ color: '#999', marginLeft: '20px' }}>Log in to share a thought!</p>
+              )
+        }
         </section>
       </>
         )

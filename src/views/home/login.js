@@ -11,7 +11,6 @@ export default function Login () {
   // use state to manage the form data.
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [redirect, setRedirect] = useState(false)
   const { setUserInfo } = useContext(UserContext)
   const navigate = useNavigate()
 
@@ -34,14 +33,10 @@ export default function Login () {
       res.json().then(userInfo => {
         setUserInfo(userInfo)
         window.localStorage.setItem('isLoggedIn', true)
-        setRedirect(true)
+        navigate('/roomsIndex')
       })
     } else {
       alert('Wrong credentials')
-    }
-
-    if (redirect) {
-      navigate('/roomsIndex')
     }
   }
 
