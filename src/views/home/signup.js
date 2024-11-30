@@ -14,7 +14,7 @@ export default function Signup () {
    */
   async function register (ev) {
     ev.preventDefault()
-    const apiUrl = `${process.env.REACT_APP_API_URL}/register`
+    const apiUrl = 'https://cscloud8-35.lnu.se/auth-service/api/v1/register'
     const res = await fetch(apiUrl, {
       method: 'POST',
       body: JSON.stringify({ username, password }),

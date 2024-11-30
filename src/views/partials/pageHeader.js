@@ -11,7 +11,7 @@ export default function Header () {
   const { setUserInfo, userInfo } = useContext(UserContext)
   useEffect(() => {
     if (window.localStorage.getItem('isLoggedIn') === 'true') {
-      fetch('http://localhost:3200/api/v1/userInfo', {
+      fetch('https://cscloud8-35.lnu.se/auth-service/api/v1/userInfo', {
         credentials: 'include'
       }).then(response => {
         response.json().then(userInfo => {
@@ -22,14 +22,14 @@ export default function Header () {
         setUserInfo(null)
       })
     }
-  }, [])
+  }, [setUserInfo])
 
   /**
    * Logout func.
    *
    */
   function logout () {
-    fetch('http://localhost:3200/api/v1/logout', {
+    fetch('https://cscloud8-35.lnu.se/auth-service/api/v1/logout', {
       credentials: 'include',
       method: 'POST'
     })
@@ -44,14 +44,15 @@ export default function Header () {
       <nav>
         {username && (
           <>
-            <Link to="/create">Create new room</Link>
-            <a onClick={logout}>Logout ({username})</a>
+            <Link to="/roomsIndex">Rooms</Link>
+            <a onClick={logout}>Logout  </a>
           </>
         )}
         {!username && (
           <>
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign up</Link>
+            <Link to="/roomsIndex">Rooms</Link>
           </>
         )}
       </nav>

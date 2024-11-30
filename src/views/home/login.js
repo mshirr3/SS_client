@@ -22,7 +22,7 @@ export default function Login () {
    */
   async function login (ev) {
     ev.preventDefault()
-    const apiUrl = `${process.env.REACT_APP_API_URL}/login`
+    const apiUrl = 'https://cscloud8-35.lnu.se/auth-service/api/v1/login'
     const res = await fetch(apiUrl, {
       method: 'POST',
       body: JSON.stringify({ username, password }),
@@ -41,7 +41,7 @@ export default function Login () {
     }
 
     if (redirect) {
-      navigate('/forumsIndex')
+      navigate('/roomsIndex')
     }
   }
 
